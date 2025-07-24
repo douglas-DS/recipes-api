@@ -10,6 +10,7 @@ data class CartItemResponse(
     val id: Int,
     val name: String,
     val kind: CartItemKind,
+    val total: Long,
 )
 
 enum class CartItemKind {

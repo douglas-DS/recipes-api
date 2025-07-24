@@ -67,6 +67,7 @@ class CartService(
             product != null -> CartItemKind.PRODUCT
             recipe != null -> CartItemKind.RECIPE
             else -> throw HttpException.NotFound("Product or recipe not found")
-        }
+        },
+        total = product?.priceInCents ?: recipe?.getIngredientsTotal() ?: 0
     )
 }

@@ -21,12 +21,14 @@ data class Recipe(
     @Column(nullable = false, length = 255)
     val name: String,
 
-    // Here's an intentional join with "recipe_ingredients", since we need all ingredients from a recipe at once.
-    // Could be retrieved from within another endpoint (e.g.: /recipes/:id/ingredients) for better performance and resource saving.
+    // Intentional join with "recipe_ingredients", since we need all ingredients from a recipe at once.
+    // Could be retrieved from within another endpoint (e.g.: GET /recipes/:id/ingredients) for better performance and resource saving.
     @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     @JsonManagedReference
     val ingredients: MutableList<RecipeIngredient> = mutableListOf(),
 ) {
+    fun getIngredientsTotal(): Long = ingredients.sumOf { it.product.priceInCents }
+
     final override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null) return false

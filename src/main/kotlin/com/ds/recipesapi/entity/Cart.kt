@@ -30,7 +30,7 @@ data class Cart(
     fun addRecipe(recipe: Recipe) {
         val cartItem = CartItem(cart = this, recipe = recipe)
         items.add(cartItem)
-        totalInCents += recipe.ingredients.sumOf { it.product.priceInCents }
+        totalInCents += recipe.getIngredientsTotal()
     }
 
     final override fun equals(other: Any?): Boolean {

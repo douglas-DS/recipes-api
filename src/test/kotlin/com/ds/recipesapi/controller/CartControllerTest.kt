@@ -44,7 +44,7 @@ class CartControllerTest {
     fun `should add recipe to cart`() {
         // Given
         val request = AddRecipeRequest(recipeId = 2)
-        val response = CartResponse(id = 1, total = 1000, items = listOf(CartItemResponse(id = 2, name = "Test", kind = CartItemKind.RECIPE)))
+        val response = CartResponse(id = 1, total = 1000, items = listOf(CartItemResponse(id = 2, name = "Test", kind = CartItemKind.RECIPE, total = 1000)))
         coEvery { cartService.addRecipe(id = 1, recipeId = 2) } returns response
 
         // When & Then

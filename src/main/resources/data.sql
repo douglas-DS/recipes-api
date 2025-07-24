@@ -1,14 +1,6 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- MOCK DATA
 ------------------------------------------------------------------------------------------------------------------------
--- Insert carts (5 carts with calculated totals)
-INSERT INTO carts (total_in_cents) VALUES
-(2850),  -- Cart 1
-(4200),  -- Cart 2
-(1550),  -- Cart 3
-(0),     -- Cart 4 (empty)
-(3750);  -- Cart 5
-
 -- Insert products (20 products)
 INSERT INTO products (name, price_in_cents) VALUES
 ('Organic Flour 1kg', 450),
@@ -101,12 +93,22 @@ INSERT INTO recipe_ingredients (recipe_id, product_id, quantity, unit) VALUES
 (7, 16, 3, 'pint'),  -- Garlic
 (7, 10, 10, 'g');    -- Fresh Basil
 
+-- Insert carts (5 carts with calculated totals)
+INSERT INTO carts (total_in_cents) VALUES
+(0),  -- Cart 1
+(0),  -- Cart 2
+(0),  -- Cart 3
+(0),     -- Cart 4 (empty)
+(0);  -- Cart 5
+
 -- Insert cart items
 -- Cart 1: 3 items (1 recipe + 2 products)
 INSERT INTO cart_items (cart_id, recipe_id, product_id) VALUES
 (1, 1, NULL),        -- Chocolate Chip Cookies recipe
 (1, NULL, 3),        -- Milk
 (1, NULL, 5);        -- Vanilla Extract
+
+UPDATE carts SET total_in_cents = 4730 WHERE id = 1;
 
 -- Cart 2: 4 items (2 recipes + 2 products)
 INSERT INTO cart_items (cart_id, recipe_id, product_id) VALUES
@@ -115,10 +117,14 @@ INSERT INTO cart_items (cart_id, recipe_id, product_id) VALUES
 (2, NULL, 20),       -- Heavy Cream
 (2, NULL, 19);       -- Parmesan Cheese
 
+UPDATE carts SET total_in_cents = 5700 WHERE id = 2;
+
 -- Cart 3: 2 items (1 recipe + 1 product)
 INSERT INTO cart_items (cart_id, recipe_id, product_id) VALUES
 (3, 4, NULL),        -- Vanilla Cupcakes recipe
 (3, NULL, 17);       -- Bell Peppers
+
+UPDATE carts SET total_in_cents = 3830 WHERE id = 3;
 
 -- Cart 4: 0 items (empty cart)
 
@@ -129,3 +135,5 @@ INSERT INTO cart_items (cart_id, recipe_id, product_id) VALUES
 (5, 7, NULL),        -- Garlic Bread recipe
 (5, NULL, 15),       -- Onion
 (5, NULL, 14);       -- Ground Beef
+
+UPDATE carts SET total_in_cents = 5330 WHERE id = 5;
