@@ -1,7 +1,6 @@
 package com.ds.recipesapi.controller
 
 import com.ds.recipesapi.dto.AddRecipeRequest
-import com.ds.recipesapi.dto.AddRecipeResponse
 import com.ds.recipesapi.dto.CartResponse
 import com.ds.recipesapi.service.CartService
 import io.swagger.v3.oas.annotations.Operation
@@ -20,25 +19,25 @@ import org.springframework.web.bind.annotation.RestController
 class CartController(
     private val service: CartService,
 ) {
-    @Operation(summary = "Get cart by id")
+    @Operation(summary = "Returns a cart by its ID")
     @GetMapping("/{id}")
-    suspend fun getById(@PathVariable id: Long): CartResponse = service.findOne(id = id)
+    suspend fun getById(@PathVariable id: Int): CartResponse = service.findOne(id = id)
 
-    @Operation(summary = "Add recipe to cart")
+    @Operation(summary = "Adds a recipe to a cart")
     @PostMapping("/{id}/add_recipe")
     suspend fun addRecipe(
-        @PathVariable id: Long,
-        @RequestBody requestBody: AddRecipeRequest,
-    ): AddRecipeResponse = service.addRecipe(id = id, recipeId = requestBody.recipeId)
+        @PathVariable id: Int,
+        @RequestBody body: AddRecipeRequest,
+    ): CartResponse = service.addRecipe(id = id, recipeId = body.recipeId)
 
-    @Operation(summary = "Delete recipe from a specific cart")
+    @Operation(summary = "Removes a specific recipe from a cart")
     @DeleteMapping("/{cartId}/recipes/{recipeId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    suspend fun deleteById(
-        @PathVariable cartId: Long,
-        @PathVariable recipeId: Long,
+    suspend fun removeRecipeById(
+        @PathVariable cartId: Int,
+        @PathVariable recipeId: Int,
     ) {
-        service.deleteOne(id = cartId)
+        service.removeOneRecipe(id = cartId, recipeId = recipeId)
     }
 
 }

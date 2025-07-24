@@ -1,7 +1,9 @@
 package com.ds.recipesapi.entity
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -17,11 +19,20 @@ data class Cart(
     val id: Int? = null,
 
     @Column(nullable = false, columnDefinition = "BIGINT")
-    val totalInCents: Long,
+    var totalInCents: Long,
 
-    @OneToMany(mappedBy = "cart")
-    val items: MutableList<CartItem> = mutableListOf()
+    // Intentional join with "cart_items" to retrieve all items at once.
+    // Could be retrieved from within another endpoint (e.g.: GET /carts/:id/items) for better performance and resource saving.
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    var items: MutableList<CartItem> = mutableListOf()
 ) {
+    fun addRecipe(recipe: Recipe) {
+        val cartItem = CartItem(cart = this, recipe = recipe)
+        items.add(cartItem)
+        totalInCents += recipe.ingredients.sumOf { it.product.priceInCents }
+    }
+
     final override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null) return false

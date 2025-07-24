@@ -1,12 +1,17 @@
 package com.ds.recipesapi.dto
 
 data class CartResponse(
-    val id: Long,
-    val items: Collection<CartItemResponse>,
-    val total: Double
+    val id: Int,
+    val total: Long,
+    val items: List<CartItemResponse>
 )
 
 data class CartItemResponse(
-    val id: Long,
+    val id: Int,
     val name: String,
+    val kind: CartItemKind,
 )
+
+enum class CartItemKind {
+    PRODUCT, RECIPE;
+}
