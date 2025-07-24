@@ -22,6 +22,8 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.9")
 
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
