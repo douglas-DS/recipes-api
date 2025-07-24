@@ -1,6 +1,7 @@
 package com.ds.recipesapi.entity
 
 import com.fasterxml.jackson.annotation.JsonManagedReference
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -23,7 +24,7 @@ data class Cart(
 
     // Intentional join with "cart_items" to retrieve all items at once.
     // Could be retrieved from within another endpoint (e.g.: GET /carts/:id/items) for better performance and resource saving.
-    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = [CascadeType.ALL], orphanRemoval = true)
     @JsonManagedReference
     var items: MutableList<CartItem> = mutableListOf()
 ) {
@@ -31,6 +32,11 @@ data class Cart(
         val cartItem = CartItem(cart = this, recipe = recipe)
         items.add(cartItem)
         totalInCents += recipe.getIngredientsTotal()
+    }
+
+    fun removeItem(item: CartItem) {
+        items.remove(item)
+        totalInCents -= item.product?.priceInCents ?: item.recipe?.getIngredientsTotal() ?: 0
     }
 
     final override fun equals(other: Any?): Boolean {

@@ -43,7 +43,7 @@ class CartService(
         val cart = findById(id = id)
         val item = cart.items.find { item -> item.recipe?.id == recipeId }
             ?: throw HttpException.NotFound("Cart item with recipe id $recipeId not found")
-        cart.items.remove(item)
+        cart.removeItem(item = item)
         cartRepo.save(cart)
     }
 
