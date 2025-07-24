@@ -1,15 +1,11 @@
-server:
-  port: 8080
-
 spring:
   application:
     name: recipes-api
   datasource:
-    url: jdbc:postgresql://postgres:5432/${DATABASE_NAME:recipes}
-    username: ${DATABASE_USERNAME:user}
-    password: ${DATABASE_PASSWORD:password}
+    url: jdbc:postgresql://localhost:5432/recipes
+    username: user
+    password: password
   jpa:
-    defer-datasource-initialization: true
     hibernate:
       ddl-auto: none
     properties:
@@ -18,7 +14,7 @@ spring:
         format_sql: true
   sql:
     init:
-      mode: always
+      mode: never
 
 springdoc:
   swagger-ui:
