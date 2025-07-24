@@ -1,7 +1,9 @@
 package com.ds.recipesapi.entity
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -19,7 +21,10 @@ data class Recipe(
     @Column(nullable = false, length = 255)
     val name: String,
 
-    @OneToMany(mappedBy = "recipe")
+    // Here's an intentional join with "recipe_ingredients", since we need all ingredients from a recipe at once.
+    // Could be retrieved from within another endpoint (e.g.: /recipes/:id/ingredients) for better performance and resource saving.
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
+    @JsonManagedReference
     val ingredients: MutableList<RecipeIngredient> = mutableListOf(),
 ) {
     final override fun equals(other: Any?): Boolean {

@@ -1,12 +1,14 @@
 package com.ds.recipesapi.dto
 
 data class RecipeResponse(
-    val id: Long,
+    val id: Int,
     val name: String,
-    val ingredients: Collection<RecipeIngredientResponse>
+    val ingredients: List<RecipeIngredientResponse>
 )
 
 data class RecipeIngredientResponse(
-    val id: Long,
-    val name: String,
+    val id: Int,
+    val productName: String,
+    val quantity: Double,
+    val unit: String,
 )
