@@ -1,6 +1,6 @@
 # Recipes API
 
-A Spring Boot application built with Kotlin that provides RESTful endpoints for managing shopping carts and recipes. 
+A Spring Boot application built with Kotlin that provides RESTful endpoints for managing carts with their items and recipes.
 
 This service leverages Spring WebFlux for reactive support, Spring Data JPA for persistence, and includes 
 out-of-the-box OpenAPI 3.0 and Swagger UI for API documentation.
@@ -25,15 +25,15 @@ out-of-the-box OpenAPI 3.0 and Swagger UI for API documentation.
 
 ## Overview
 
-The **Recipes API** is responsible for creating and retrieving recipes along with their ingredients. 
-It showcases database interaction via **Spring Data JPA**.
+The **Recipes API** is responsible for managing carts and their recipes (items), and retrieving recipes along with their ingredients. 
+It showcases database interaction via **Spring Data JPA** and **Relational Entities**.
 
 ---
 
 ## Features
 
 - **Retrieve all recipes**, including their associated ingredients.
-- **Retrieve carts by ID** including their associated items.  
+- **Retrieve carts by ID** including their items.  
 - **Adds a recipe** to a cart.  
 - **Removes a recipe** from a cart.  
 - **Reactive programming** capabilities with Spring WebFlux.  
